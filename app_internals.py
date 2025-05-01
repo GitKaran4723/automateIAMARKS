@@ -13,8 +13,8 @@ hodUser = os.getenv("hodUser")
 hodPass = os.getenv("hodpass")
 
 # Load Excel
-df = pd.read_csv("DS.csv")  # your file with columns: 'USN', 'Marks'
-marks_dict = dict(zip(df['USN'].astype(str).str.strip(), df['Marks']))
+df = pd.read_csv("Internals.csv")  # your file with columns: 'USN', 'Marks'
+marks_dict = dict(zip(df['USN'].astype(str).str.strip(), df['OS_Marks']))
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
@@ -50,4 +50,6 @@ for index, row in enumerate(rows, start=1):
     except Exception as e:
         print(f"⚠️ Error processing row {index}: {e}")
 
-time.sleep(60)
+# Keep the browser open for review
+input("✅ Attendance entry done. Press Enter to close...")
+driver.quit()
