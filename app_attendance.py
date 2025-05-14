@@ -13,15 +13,14 @@ hodUser = os.getenv("hodUser")
 hodPass = os.getenv("hodpass")
 
 # Hardcoded value for classes held (same for everyone)
-CLASSES_HELD = 45
+CLASSES_HELD = 60
 
-# Load CSV attendance data (Columns: USN, Attended)
-df = pd.read_csv("attendance.csv")
+# ✅ Load XLSX attendance data (Make sure openpyxl is installed)
+df = pd.read_excel("attend.xlsx")  # File should have columns: USN, OS_att
 attendance_dict = {
-    row['USN'].strip(): int(row['OS_att'])
+    row['USN'].strip(): int(row['DS_att'])
     for _, row in df.iterrows()
 }
-
 
 # Start browser
 service = Service(ChromeDriverManager().install())
@@ -62,7 +61,7 @@ for i, row in enumerate(rows, start=1):
 
             print(f"✅ {usn}: Held={CLASSES_HELD}, Attended={attended}")
         else:
-            print(f"❌ USN not in CSV: {usn}")
+            print(f"❌ USN not in Excel: {usn}")
 
     except Exception as e:
         print(f"⚠️ Error on row {i}: {e}")
